@@ -1,0 +1,31 @@
+# Frontend
+moil-frontend/moil/node_modules/
+moil-frontend/moil/dist/
+moil-frontend/moil/.env
+moil-frontend/moil/.env.local
+
+# Backend
+moil-backend/moil-api/.env
+moil-backend/moil-api/__pycache__/
+moil-backend/moil-api/**/__pycache__/
+*.pyc
+
+# Python virtual environments
+moil-backend/moil-api/venv/
+moil-backend/moil-api/.venv/
+
+# Local databases
+*.db
+*.sqlite
+*.sqlite3
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Build/cache
+*.log
+
+# Project archives
+*.zip

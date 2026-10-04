@@ -1,0 +1,27 @@
+services:
+  api:
+    build: .
+    env_file: .env
+    ports: ["8000:8000"]
+    depends_on: [db, redis]
+  worker:
+    build: .
+    command: celery -A app.workers.celery_app worker -B -l info
+    env_file: .env
+    depends_on: [db, redis]
+  db:
+    image: postgis/postgis:16-3.4
+    environment: {POSTGRES_USER: moil, POSTGRES_PASSWORD: moil, POSTGRES_DB: moil}
+    volumes: [pgdata:/var/lib/postgresql/data]
+  redis:
+    image: redis:7
+  minio:
+    image: minio/minio
+    command: server /data --console-address ":9001"
+    ports: ["9000:9000","9001:9001"]
+    environment: {MINIO_ROOT_USER: minio, MINIO_ROOT_PASSWORD: minio12345}
+  mlflow:
+    image: ghcr.io/mlflow/mlflow
+    command: mlflow server --host 0.0.0.0 --port 5000
+    ports: ["5000:5000"]
+volumes: {pgdata: {}}

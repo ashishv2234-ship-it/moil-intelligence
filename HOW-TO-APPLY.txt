@@ -1,0 +1,20 @@
+PATCH 22: moil-reports-period-patch
+What it changes
+  - Reports page, Blasting log: now follows the top-bar period (last N days, or your custom From/To dates). With "last N days" the upcoming scheduled blasts are still listed. With a custom range only that range is shown.
+  - The other reports (Shortfall risk, Corrective actions, Equipment status) are a "current position" and have no date per row, so they do not follow the period. The page now says so next to the buttons.
+  - Production summary already followed the period (unchanged).
+  - Excel, CSV and PDF downloads follow the same period. No database change.
+
+Files (3). Extract the zip first, then copy each over the same path in C:\WEBSITE\PROJECT3, choose "Replace":
+  moil-backend\moil-api\app\services\reports.py
+  moil-backend\moil-api\tests\test_api.py
+  moil-frontend\moil\src\pages\Reports.tsx
+
+Steps
+  1. Stop the backend and frontend (Ctrl+C). Copy the files. Do NOT delete moil.db.
+  2. Backend folder, run:  python -m pytest
+     You should see 39 passed (38 before + 1 new test). Send me the last lines if not.
+  3. Start the backend (python -m uvicorn app.main:app --reload) and the frontend (npm run dev). Press F5 in the browser.
+  4. Log in as mine_manager@moil.in. Open Reports -> Blasting log. The title should say "Blasting log, last 30 days and upcoming".
+  5. Change the top-bar period to 7 days: the list should get shorter. Pick a custom From/To in the past: the title shows those dates.
+  6. Click Shortfall risk: the note "Current position (the top-bar period does not apply)" should appear.
